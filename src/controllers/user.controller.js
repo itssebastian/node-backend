@@ -3,8 +3,10 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import { use } from "express/lib/router/index.js";
-import { cookie } from "express/lib/response.js";
+// import { use } from "express/lib/router/index.js";
+// import { cookie } from "express/lib/response.js";
+import pkg from "express/lib/response.js";
+const { cookie } = pkg;
 
 const generateAccessTokenAndRefreshTokens = async (userId) => {
   try {
@@ -106,7 +108,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const { email, username, password } = req.body;
 
-  if (!username || !email) {
+  if (!(username || email)) {
     throw new ApiError(400, "Username or Email is required");
   }
 
